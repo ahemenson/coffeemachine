@@ -18,20 +18,27 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void insertCoin(Coin dime) {
-		
-		if(dime != null){
+
+		if (dime != null) {
 			centavos += dime.getValue() % 100;
 			dolares += dime.getValue() / 100;
-			factory.getDisplay()
-					.info("Total: US$ " + dolares + "." + centavos + ""); //
-		}
-		else{
+			factory.getDisplay().info(
+					"Total: US$ " + dolares + "." + centavos + ""); //
+		} else {
 			throw new CoffeeMachineException("");
 		}
-		
-		
-		
 
 	}
 
+	public void cancel() {
+		boolean exception = false;
+		
+		if((dolares <= 0) || (centavos <= 0) ) {
+			exception = true;
+		}
+				
+		if(exception){
+			throw new CoffeeMachineException("");
+		}
+	}
 }
