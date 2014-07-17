@@ -1,13 +1,14 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
+import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.Coin;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
 
-public class MyCoffeeMachine implements CoffeeMachine{
+public class MyCoffeeMachine implements CoffeeMachine {
 
 	private ComponentsFactory factory;
-	private int centavos , dolares;
+	private int centavos, dolares;
 
 	public MyCoffeeMachine(ComponentsFactory factory) {
 		centavos = 0;
@@ -17,11 +18,20 @@ public class MyCoffeeMachine implements CoffeeMachine{
 	}
 
 	public void insertCoin(Coin dime) {
-		centavos += dime.getValue() % 100;
-		dolares += dime.getValue() / 100;
-		factory.getDisplay().info("Total: US$ "+dolares+"."+centavos+"");  //
-			
-	}
+		
+		if(dime != null){
+			centavos += dime.getValue() % 100;
+			dolares += dime.getValue() / 100;
+			factory.getDisplay()
+					.info("Total: US$ " + dolares + "." + centavos + ""); //
+		}
+		else{
+			throw new CoffeeMachineException("");
+		}
+		
+		
+		
 
+	}
 
 }
