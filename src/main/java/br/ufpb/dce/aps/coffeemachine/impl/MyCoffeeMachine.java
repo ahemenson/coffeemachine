@@ -7,7 +7,9 @@ import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.Coin;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Dispenser;
 import br.ufpb.dce.aps.coffeemachine.Display;
+import br.ufpb.dce.aps.coffeemachine.Drink;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 
 public class MyCoffeeMachine implements CoffeeMachine {
@@ -16,6 +18,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private int centavos, dolares; 
 	private Display display;
 	private CashBox cashBox;
+	private Dispenser dispenser;
 	private ArrayList<Coin> moedas;
 	
 	public MyCoffeeMachine(ComponentsFactory factory) {
@@ -50,7 +53,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		
 		if(moedas.size()>0){
 			Coin[] inverso = Coin.reverse();
-			factory.getDisplay().warn(Messages.CANCEL_MESSAGE);
+			factory.getDisplay().warn("Cancelling drink. Please, get your coins.");
 			for(Coin r : inverso){
 				for(Coin aux : moedas){
 					if(aux == r){
@@ -58,11 +61,28 @@ public class MyCoffeeMachine implements CoffeeMachine {
 					}
 				}
 			}
-			factory.getDisplay().info(Messages.INSERT_COINS_MESSAGE);
+			factory.getDisplay().info("Insert coins and select a drink!");
 		}
 		
 	
 
 		
+	}
+
+	public void select(Drink drink) {
+		// TODO Auto-generated method stub
+		factory.getCupDispenser().contains(1);
+		factory.getWaterDispenser().contains(0.5);
+		factory.getCoffeePowderDispenser().contains (0.8); 
+		factory.getDisplay().info("Mixing ingredients.");	
+		factory.getCoffeePowderDispenser().release (0.6); 
+		factory.getWaterDispenser().release (0.9);
+		factory.getDisplay().info("Releasing drink.");
+		factory.getCupDispenser().release (1);
+		factory.getDrinkDispenser().release (0.3);
+		factory.getDisplay().info("Please, take your drink.");		
+		factory.getDisplay().info("Insert coins and select a drink!");
+		
+				
 	}
 }
