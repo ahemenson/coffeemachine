@@ -47,14 +47,21 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void cancel() {
-
+		
 		if ((centavos == 0) && (dolares == 0)) {
 			throw new CoffeeMachineException("");
 		}
-
+		factory.getDisplay().warn(Messages.CANCEL);
 		if (moedas.size() > 0) {
+			returnCoins();
+		}
+
+	}
+	
+	void returnCoins(){
+		
 			Coin[] inverso = Coin.reverse();
-			factory.getDisplay().warn(Messages.CANCEL);
+			
 			for (Coin r : inverso) {
 				for (Coin aux : moedas) {
 					if (aux == r) {
@@ -62,9 +69,17 @@ public class MyCoffeeMachine implements CoffeeMachine {
 					}
 				}
 			}
-			factory.getDisplay().info("Insert coins and select a drink!");
-		}
-
+			newSession();
+	}
+	
+	void clearCoins(){
+		// Limpando o total de moedas inseridas
+		moedas.clear();
+	}
+	
+	void newSession(){
+		clearCoins();
+		display.info("Insert coins and select a drink!");
 	}
 
 	public void select(Drink drink) {
@@ -73,9 +88,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		factory.getCupDispenser().contains(1); // inOrder.verify(cupDispenser).contains(1);
 
 		factory.getWaterDispenser().contains(0.5); // inOrder.verify(waterDispenser).contains(anyDouble());
+		
+		if(! factory.getCoffeePowderDispenser().contains(0.8)){  // inOrder.verify(coffeePowderDispenser).contains(anyDouble());
+			factory.getDisplay().warn(Messages.OUT_OF_COFFEE_POWDER); // verifyOutOfIngredient(inOrder, Messages.OUT_OF_COFFEE_POWDER, 	Coin.quarter, Coin.dime);
+			returnCoins();
+			return;
+		}
 
-		factory.getCoffeePowderDispenser().contains(0.8); // inOrder.verify(coffeePowderDispenser).contains(anyDouble());
-
+		
 		if (drink == this.drink.BLACK_SUGAR) {
 
 			factory.getSugarDispenser().contains(5.0); // inOrder.verify(sugarDispenser).contains(anyDouble());
@@ -107,11 +127,13 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		factory.getDrinkDispenser().release(0.3); // inOrder.verify(drinkDispenser).release(anyDouble());
 
 		display.info("Please, take your drink."); // inOrder.verify(display).info(Messages.TAKE_DRINK);
-
-		display.info("Insert coins and select a drink!");
 		
-		// Limpando o total de moedas inseridas
-		moedas.clear();
+		newSession(); // nova sessão
+		
+		
+		
 
 	}
+	
+	
 }
