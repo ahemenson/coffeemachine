@@ -97,8 +97,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		
 		if (drink == this.drink.BLACK_SUGAR) {
-
-			factory.getSugarDispenser().contains(5.0); // inOrder.verify(sugarDispenser).contains(anyDouble());
+			if(! factory.getSugarDispenser().contains(5.0)){ // inOrder.verify(sugarDispenser).contains(anyDouble());
+				factory.getDisplay().warn(Messages.OUT_OF_SUGAR); //inOrder.verify(display).warn(message);
+				returnCoins();    //verifyReleaseCoins(inOrder, coins);
+				return;           //verifyNewSession(inOrder);                                     
+				                                                 
+			} 
 
 		}
 
