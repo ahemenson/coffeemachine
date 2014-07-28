@@ -85,8 +85,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	public void select(Drink drink) {
 		// método verifyBlackPlan(inOrder);
 
-		factory.getCupDispenser().contains(1); // inOrder.verify(cupDispenser).contains(1);
- 
+		
+		if(! factory.getCupDispenser().contains(1)){ // inOrder.verify(cupDispenser).contains(1);
+			factory.getDisplay().warn(Messages.OUT_OF_CUP); // verifyOutOfIngredient(inOrder, Messages.OUT_OF_CUP, Coin.quarter, Coin.dime);
+			returnCoins();
+			return;
+		}		
 		
 		if(! factory.getWaterDispenser().contains(0.5)){ // inOrder.verify(waterDispenser).contains(anyDouble());
 			factory.getDisplay().warn(Messages.OUT_OF_WATER); // verifyOutOfIngredient(inOrder, Messages.OUT_OF_WATER, Coin.quarter, Coin.dime);
