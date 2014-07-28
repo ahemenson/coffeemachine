@@ -20,6 +20,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private CashBox cashBox;
 	private Dispenser dispenser;
 	private ArrayList<Coin> moedas;
+	private Drink drink;
 	
 	public MyCoffeeMachine(ComponentsFactory factory) {
 		centavos = 0;
@@ -70,18 +71,54 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void select(Drink drink) {
-		// TODO Auto-generated method stub
-		factory.getCupDispenser().contains(1);
-		factory.getWaterDispenser().contains(0.5);
-		factory.getCoffeePowderDispenser().contains (0.8); 
-		factory.getDisplay().info("Mixing ingredients.");	
-		factory.getCoffeePowderDispenser().release (0.6); 
-		factory.getWaterDispenser().release (0.9);
-		factory.getDisplay().info("Releasing drink.");
-		factory.getCupDispenser().release (1);
-		factory.getDrinkDispenser().release (0.3);
-		factory.getDisplay().info("Please, take your drink.");		
-		factory.getDisplay().info("Insert coins and select a drink!");
+		//verifyBlackPlan(inOrder);
+
+		factory.getCupDispenser().contains(1);  //inOrder.verify(cupDispenser).contains(1);
+
+		factory.getWaterDispenser().contains(0.5);  // inOrder.verify(waterDispenser).contains(anyDouble());
+
+		factory.getCoffeePowderDispenser().contains (0.8);  // inOrder.verify(coffeePowderDispenser).contains(anyDouble());
+
+ 
+		if(drink == this.drink.BLACK_SUGAR){
+
+		//inOrder.verify(sugarDispenser).contains(anyDouble());
+
+		factory.getSugarDispenser().contains(5.0);
+
+		}
+
+		 		 
+
+		//verifyBlackSugarMix(InOrder inOrder) {
+
+		display.info("Mixing ingredients."); //inOrder.verify(display).info(Messages.MIXING);
+
+		factory.getCoffeePowderDispenser().release (0.6); // inOrder.verify(coffeePowderDispenser).release(anyDouble());
+
+		factory.getWaterDispenser().release (0.9); // inOrder.verify(waterDispenser).release(anyDouble());
+
+		 
+		if(drink == this.drink.BLACK_SUGAR){
+
+		//inOrder.verify(sugarDispenser).release(anyDouble());
+
+		factory.getSugarDispenser().release(5.0);
+
+		}
+
+		 
+		//verifyDrinkRelease(InOrder inOrder)
+
+		display.info("Releasing drink."); //inOrder.verify(display).info(Messages.RELEASING);
+
+		factory.getCupDispenser().release (1);  // inOrder.verify(cupDispenser).release(1);
+
+		factory.getDrinkDispenser().release (0.3); //inOrder.verify(drinkDispenser).release(anyDouble());
+
+		display.info("Please, take your drink.");  // inOrder.verify(display).info(Messages.TAKE_DRINK);
+
+		display.info("Insert coins and select a drink!");
 		
 				
 	}
