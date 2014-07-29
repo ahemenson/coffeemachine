@@ -136,8 +136,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		if (drink == this.drink.WHITE) {
 			factory.getCreamerDispenser().release(2.0); // inOrder.verify(creamerDispenser).release(anyDouble());
 		}
-		
-		
+				
 		if (drink == this.drink.BLACK_SUGAR) {
 
 			// inOrder.verify(sugarDispenser).release(anyDouble());
