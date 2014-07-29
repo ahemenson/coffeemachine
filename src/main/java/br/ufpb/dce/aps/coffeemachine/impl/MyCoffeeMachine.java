@@ -1,5 +1,7 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
+import static org.mockito.Matchers.anyDouble;
+
 import java.util.ArrayList;
 
 import br.ufpb.dce.aps.coffeemachine.CashBox;
@@ -105,6 +107,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			returnCoins();
 			return;
 		}
+		
+		if (drink == this.drink.WHITE) {
+			factory.getCreamerDispenser().contains(2.0); // inOrder.verify(creamerDispenser).contains(anyDouble());
+			
+
+		}
 
 		
 		if (drink == this.drink.BLACK_SUGAR) {
@@ -125,6 +133,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		factory.getWaterDispenser().release(0.9); // inOrder.verify(waterDispenser).release(anyDouble());
 
+		if (drink == this.drink.WHITE) {
+			factory.getCreamerDispenser().release(2.0); // inOrder.verify(creamerDispenser).release(anyDouble());
+		}
+		
+		
 		if (drink == this.drink.BLACK_SUGAR) {
 
 			// inOrder.verify(sugarDispenser).release(anyDouble());
