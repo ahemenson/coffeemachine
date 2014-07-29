@@ -23,6 +23,8 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private Dispenser dispenser;
 	private ArrayList<Coin> moedas;
 	private Drink drink;
+	private int troco;
+	private boolean retornaTroco = false;
 
 	public MyCoffeeMachine(ComponentsFactory factory) {
 		centavos = 0;
@@ -40,8 +42,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			moedas.add(coin);
 			centavos += coin.getValue() % 100;
 			dolares += coin.getValue() / 100;
-			factory.getDisplay().info(
-					"Total: US$ " + dolares + "." + centavos + ""); //
+			factory.getDisplay().info("Total: US$ " + dolares + "." + centavos + ""); //
+			this.troco = (centavos + dolares) - 35;
+			if(troco>0){
+				retornaTroco = true;
+			}
+			
 		} else {
 			throw new CoffeeMachineException("");
 		}
@@ -72,6 +78,30 @@ public class MyCoffeeMachine implements CoffeeMachine {
 				}
 			}
 			newSession();
+	}
+	
+	void planCoins(int troco){
+		
+		Coin[] inverso = Coin.reverse();
+		for (Coin r : inverso) {
+			if(r.getValue() <= troco){
+				cashBox.count(r);
+				troco -= r.getValue(); 
+			}
+		}
+				
+	}
+	
+	void releaseCoins(int troco){
+				
+		Coin[] inverso = Coin.reverse();
+		for (Coin r : inverso) {
+			if(r.getValue() <= troco){
+				cashBox.release(r);
+				troco -= r.getValue(); 
+			}
+		}
+				
 	}
 	
 	void clearCoins(){
@@ -108,10 +138,17 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			return;
 		}
 		
+		
+		
 		if (drink == this.drink.WHITE) {
 			factory.getCreamerDispenser().contains(2.0); // inOrder.verify(creamerDispenser).contains(anyDouble());
 			
-
+		}
+		
+		if (drink == this.drink.WHITE_SUGAR) {
+			factory.getCreamerDispenser().contains(2.0); // inOrder.verify(creamerDispenser).contains(anyDouble());
+			factory.getSugarDispenser().contains(5.0);
+			
 		}
 
 		
@@ -124,6 +161,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			} 
 
 		}
+		
+		if(retornaTroco){
+			planCoins(this.troco);
+		}
+		
+		
 
 		// método verifyBlackSugarMix(InOrder inOrder) {
 
@@ -136,12 +179,15 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		if (drink == this.drink.WHITE) {
 			factory.getCreamerDispenser().release(2.0); // inOrder.verify(creamerDispenser).release(anyDouble());
 		}
+		
+		if (drink == this.drink.WHITE_SUGAR) {
+			factory.getCreamerDispenser().release(2.0); // inOrder.verify(creamerDispenser).contains(anyDouble());
+			factory.getSugarDispenser().release(5.0);
+		}
 				
 		if (drink == this.drink.BLACK_SUGAR) {
 
-			// inOrder.verify(sugarDispenser).release(anyDouble());
-
-			factory.getSugarDispenser().release(5.0);
+			factory.getSugarDispenser().release(5.0);  // inOrder.verify(sugarDispenser).release(anyDouble());
 
 		}
 
@@ -154,6 +200,12 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		factory.getDrinkDispenser().release(0.3); // inOrder.verify(drinkDispenser).release(anyDouble());
 
 		display.info("Please, take your drink."); // inOrder.verify(display).info(Messages.TAKE_DRINK);
+		
+		if(retornaTroco){
+			releaseCoins(this.troco);
+		}
+		
+		
 		
 		newSession(); // nova sessão
 		
