@@ -2,6 +2,7 @@ package br.ufpb.dce.aps.coffeemachine.impl;
 
 import static org.mockito.Matchers.anyDouble;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import br.ufpb.dce.aps.coffeemachine.CashBox;
@@ -27,6 +28,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private boolean retornaTroco = false;
 	private final int COFFEEPRICE = 35;
 	private int valorTroco;
+	private boolean isFaltaTroco = false;
 
 	public MyCoffeeMachine(ComponentsFactory factory) {
 		centavos = 0;
@@ -83,16 +85,17 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		newSession();
 	}
 
-	void planCoins(int troco) {
+	boolean planCoins(int troco) {
 
 		Coin[] inverso = Coin.reverse();
 		for (Coin r : inverso) {
-			if (r.getValue() <= troco) {
-				cashBox.count(r);
+			if (r.getValue() <= troco && cashBox.count(r) > 0) {
 				troco -= r.getValue();
 			}
 		}
-
+		
+		return troco == 0;
+		
 	}
 
 	void releaseCoins(int troco) {
@@ -120,6 +123,8 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		
 	}
+	
+	
 
 	void clearCoins() {
 		// Limpando o total de moedas inseridas
@@ -190,7 +195,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		}
 
 		
-		planCoins(calculaTroco());
+		if(!planCoins(calculaTroco())){
+			factory.getDisplay().warn(Messages.NO_ENOUGHT_CHANGE);  //inOrder.verify(display).warn(Messages.NO_ENOUGHT_CHANGE);
+			returnCoins();//verifyCloseSession(inOrder, Coin.halfDollar);
+			return;
+		}
+		
+		
+		
 		
 
 		// método verifyBlackSugarMix(InOrder inOrder) {
