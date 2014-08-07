@@ -1,9 +1,14 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import br.ufpb.dce.aps.coffeemachine.Button;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
 import br.ufpb.dce.aps.coffeemachine.Coin;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Dispenser;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 import br.ufpb.dce.aps.coffeemachine.Recipe;
 
@@ -14,6 +19,9 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private MyPayrollSystem myPayrollSystem;
 	private DrinkPrice myDrinkPrice;
 	private GerenteDrink gerenteDrink;
+	public static HashMap<String, Dispenser> listDispenser = new HashMap<String, Dispenser>();
+
+	
 
 	public void insertCoin(Coin coin) {
 
@@ -162,6 +170,17 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		showInfoButtons();
 		//myDisplay.showInfoButton2s(button,recipe);
 		
+		
+	}
+
+	public void addDispenser(String ingredient, Dispenser dispenser) {
+	//	
+		listDispenser.put(ingredient, dispenser);
+		gerenteDrink.addNewDispenser(listDispenser);
+		
+		
+		
+		//this.dispenser.
 		
 	}
 

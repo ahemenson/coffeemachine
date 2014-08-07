@@ -1,7 +1,10 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
+import java.util.HashMap;
+
 import br.ufpb.dce.aps.coffeemachine.Button;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Dispenser;
 import br.ufpb.dce.aps.coffeemachine.Recipe;
 
 public class GerenteDrink {
@@ -11,6 +14,7 @@ public class GerenteDrink {
 	private boolean isValid;
 	private Recipe recipe;
 	private Button button;
+	private Dispenser dispenser;
 
 	public GerenteDrink(ComponentsFactory factory) {
 		this.factory = factory;
@@ -60,6 +64,11 @@ public class GerenteDrink {
 		this.button = b;
 		this.recipe = recipe;
 		
+		
+	}
+
+	public void addNewDispenser(HashMap<String, Dispenser> listDispenser) {
+		drink.configureNewDispenserDrink(listDispenser);
 		
 	}
 

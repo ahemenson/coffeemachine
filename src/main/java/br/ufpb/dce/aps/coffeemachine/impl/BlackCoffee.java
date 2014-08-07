@@ -3,6 +3,7 @@ package br.ufpb.dce.aps.coffeemachine.impl;
 import java.util.HashMap;
 
 import br.ufpb.dce.aps.coffeemachine.Button;
+import br.ufpb.dce.aps.coffeemachine.Dispenser;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 import br.ufpb.dce.aps.coffeemachine.Recipe;
 
@@ -54,6 +55,11 @@ public class BlackCoffee implements IDrink {
 	public void configureDrink(Recipe recipe) {
 		itens.put(Recipe.WATER, recipe.getIngredientQuantity(Recipe.WATER));
 		
+		
+	}
+
+	public void configureNewDispenserDrink(HashMap<String, Dispenser> listDispenser) {
+		// TODO Auto-generated method stub
 		
 	}
 

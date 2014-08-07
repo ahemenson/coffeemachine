@@ -1,5 +1,8 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
+import java.util.HashMap;
+
+import br.ufpb.dce.aps.coffeemachine.Dispenser;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 import br.ufpb.dce.aps.coffeemachine.Recipe;
 
@@ -45,6 +48,11 @@ public class Bouillon implements IDrink {
 	}
 
 	public void configureDrink(Recipe recipe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void configureNewDispenserDrink(HashMap<String, Dispenser> listDispenser) {
 		// TODO Auto-generated method stub
 		
 	}
