@@ -126,11 +126,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			abortSession(Messages.NO_ENOUGHT_CHANGE);
 			return;
 		}
-		// if(!planCoins()){
-		// abortSession(Messages.NO_ENOUGHT_CHANGE);
-		// return;
-		// }
-
+		
 		myDisplay.info(Messages.MIXING);
 
 		// Chamada de métodos Mix (InOrder inOrder)

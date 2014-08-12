@@ -1,6 +1,7 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Messages;
 
 	public class WhiteCoffee extends BlackCoffee {
 	
@@ -14,7 +15,12 @@ import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
 		if (!blackPlan()) { //verifyBlackPlan(getCupDispenser(), getWaterDispenser(), getCoffeePowderDispenser()
 			return false;
 		}
-		getFactory().getCreamerDispenser().contains(2.0); //inOrder.verify(creamerDispenser).contains(anyDouble());
+		if(!getFactory().getCreamerDispenser().contains(2.0)){//inOrder.verify(creamerDispenser).contains(anyDouble());
+			WarnMessage.setWarnMessage(Messages.OUT_OF_CREAMER);
+			return false;
+		}
+		
+		
 		return true;
 	}
 	
