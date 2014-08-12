@@ -19,12 +19,12 @@ public class BlackCoffee {
 			return false;
 		}
 
-		if (!factory.getWaterDispenser().contains(0.5)) { 
+		if (!factory.getWaterDispenser().contains(100)) { 
 			WarnMessage.setWarnMessage(Messages.OUT_OF_WATER);
 			return false;
 		}
 
-		if (!factory.getCoffeePowderDispenser().contains(0.8)) {
+		if (!factory.getCoffeePowderDispenser().contains(15)) {
 			WarnMessage.setWarnMessage(Messages.OUT_OF_COFFEE_POWDER); 
 			return false;
 		}
@@ -33,8 +33,8 @@ public class BlackCoffee {
 	}
 	
 	public void blackMix(){
-		factory.getCoffeePowderDispenser().release(0.6); 
-		factory.getWaterDispenser().release(0.9);
+		factory.getCoffeePowderDispenser().release(15); 
+		factory.getWaterDispenser().release(100);
 	}
 	
 	public ComponentsFactory getFactory(){
@@ -43,7 +43,7 @@ public class BlackCoffee {
 	
 	public void drinkRelease(){
 		factory.getCupDispenser().release(1);
-		factory.getDrinkDispenser().release(0.3); 
+		factory.getDrinkDispenser().release(100); 
 	}
 	
 }
