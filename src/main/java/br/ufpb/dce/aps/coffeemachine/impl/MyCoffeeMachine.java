@@ -27,6 +27,8 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		myDisplay = new MyDisplay(factory);
 		myDisplay.info(Messages.INSERT_COINS);
 		myCashBox = new MyCashBox(factory);
+		coffee = new BlackCoffee(factory);
+		myCashBox.setCoffeePrice(35);
 
 	}
 
@@ -82,6 +84,10 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void select(Drink drink) {
+		
+		if(drink == drink.BOUILLON){
+			myCashBox.setCoffeePrice(25);
+		}
 
 		boolean isvalido = true;
 
@@ -94,8 +100,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		switch (drink) {
 
-		case BLACK:
-			coffee = new BlackCoffee(factory);
+		case BLACK:			
 			isvalido = coffee.blackPlan();
 			break;
 		case WHITE:
@@ -109,6 +114,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		case BLACK_SUGAR:
 			coffee = new BlackSugarCoffee(factory);
 			isvalido = ((BlackSugarCoffee) coffee).blackSugarPlan();
+			break;
+		case BOUILLON:
+			coffee = new  Bouillon(factory);
+			//myCashBox.setCoffeePrice(25);
+			isvalido = ((Bouillon) coffee).bouillonPlan();
 			break;
 
 		}
@@ -148,7 +158,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		case BLACK_SUGAR:
 			((BlackSugarCoffee) coffee).blackSugarMix();
 			break;
+		case BOUILLON:
+			((Bouillon) coffee).bouillonMix();
+			break;
 		}
+		
 
 		// Chamadas de DrinkRelease(InOrder inOrder)
 
