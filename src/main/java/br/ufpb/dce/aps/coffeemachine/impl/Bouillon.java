@@ -13,7 +13,10 @@ public class Bouillon extends BlackCoffee{
 		if (!blackPlan()) { //verifyBlackPlan(getCupDispenser(), getWaterDispenser(), getCoffeePowderDispenser()
 			return false;
 		}		
-		getFactory().getBouillonDispenser().contains(10);		
+		if (!getFactory().getBouillonDispenser().contains(10)) { 
+			WarnMessage.setWarnMessage(Messages.OUT_OF_BOUILLON_POWDER);
+			return false;
+		}
 		return true;
 	}	
 	
