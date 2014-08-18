@@ -13,13 +13,13 @@ public class WhiteSugarCoffee extends WhiteCoffee{
 		if(!whitePlan()){ // inOrder.verify(creamerDispenser).contains(anyDouble());
 			return false;
 		}
-		getFactory().getSugarDispenser().contains(5.0); // inOrder.verify(getSugarDispenser).contains(anyDouble());
+		getFactory().getSugarDispenser().contains(5); // inOrder.verify(getSugarDispenser).contains(anyDouble());
 		return true;
 	}
 
 	public void whiteSugarMix(){
 		whiteMix();
-		getFactory().getSugarDispenser().release(5.0);   //inOrder.verify(sugarDispenser).release
+		getFactory().getSugarDispenser().release(5);   //inOrder.verify(sugarDispenser).release
 	}
 
 }
