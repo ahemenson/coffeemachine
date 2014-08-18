@@ -25,7 +25,6 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	public void insertCoin(Coin coin) {
 
 		myCashBox.insertCoin(coin);
-
 	}
 
 	public void cancel() {
@@ -186,6 +185,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 	public void readBadge(int badgeCode) {
 		myDisplay.info(Messages.BADGE_READ);
+		myCashBox.setUseCard(true);
 			
 	}
 

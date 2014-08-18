@@ -16,6 +16,7 @@ public class MyCashBox {
 	private ArrayList<Coin> moedas;
 	private int centavos, dolares;
 	private int COFFEEPRICE;
+	private boolean isUseCard = false;
 	
 	public MyCashBox(ComponentsFactory factory){
 		cashBox =  factory.getCashBox();
@@ -26,15 +27,23 @@ public class MyCashBox {
 	
 	public void insertCoin(Coin coin) {
 		
-		if (coin != null) {
-			moedas.add(coin);
-			centavos += coin.getValue() % 100;
-			dolares += coin.getValue() / 100;
-			myDisplay.info("Total: US$ " + dolares + "." + centavos + "");
-	
-		} else {
-			throw new CoffeeMachineException("");
+		if(!isUseCard()){
+			if (coin != null) {
+				moedas.add(coin);
+				centavos += coin.getValue() % 100;
+				dolares += coin.getValue() / 100;
+				myDisplay.info("Total: US$ " + dolares + "." + centavos + "");
+		
+			} else {
+				throw new CoffeeMachineException("");
+			}
 		}
+		else{
+			returnCoins();
+			myDisplay.warn(Messages.CAN_NOT_INSERT_COINS);
+		}
+		
+		
 	}
 
 	public boolean cancel(){
@@ -87,6 +96,16 @@ public class MyCashBox {
 	
 	public void setCoffeePrice(int coffeePrice){
 		this.COFFEEPRICE = coffeePrice;
+	}
+
+
+	public boolean isUseCard() {
+		return isUseCard;
+	}
+
+
+	public void setUseCard(boolean isUseCard) {
+		this.isUseCard = isUseCard;
 	}
 		
 
