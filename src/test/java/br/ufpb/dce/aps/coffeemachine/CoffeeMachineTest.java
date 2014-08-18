@@ -23,7 +23,7 @@ public class CoffeeMachineTest {
 	protected Dispenser creamerDispenser;
 	protected Dispenser bouillonDispenser;
 
-	protected final CoffeeMachine createFacade(ComponentsFactory factory) {
+	protected CoffeeMachine createFacade(ComponentsFactory factory) {
 		
 		CoffeeMachine coffeeMachine = null;
 		

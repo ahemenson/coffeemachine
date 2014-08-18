@@ -1,5 +1,6 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
+import static org.mockito.Mockito.verify;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.Coin;
@@ -20,17 +21,6 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private BlackCoffee coffee;
 	private MyDisplay myDisplay;
 	private MyCashBox myCashBox;
-
-	public MyCoffeeMachine(ComponentsFactory factory) {
-
-		this.factory = factory;
-		myDisplay = new MyDisplay(factory);
-		myDisplay.info(Messages.INSERT_COINS);
-		myCashBox = new MyCashBox(factory);
-		coffee = new BlackCoffee(factory);
-		myCashBox.setCoffeePrice(35);
-
-	}
 
 	public void insertCoin(Coin coin) {
 
@@ -182,6 +172,21 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		myDisplay.warn(msg);
 		myCashBox.returnCoins();
 		newSession();
+	}
+
+	public void setFactory(ComponentsFactory factory) {
+		this.factory = factory;
+		myDisplay = new MyDisplay(factory);
+		myDisplay.info(Messages.INSERT_COINS);
+		myCashBox = new MyCashBox(factory);
+		coffee = new BlackCoffee(factory);
+		myCashBox.setCoffeePrice(35);
+
+	}
+
+	public void readBadge(int badgeCode) {
+		myDisplay.info(Messages.BADGE_READ);
+			
 	}
 
 }
