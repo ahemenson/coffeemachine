@@ -23,9 +23,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private MyCashBox myCashBox;
 
 	public void insertCoin(Coin coin) {
+				
 		
 		if(!myCashBox.isUseCard()){
 			myCashBox.insertCoin(coin);
+			myCashBox.setUseCoin(true);
 		}
 		else{
 			myDisplay.warn(Messages.CAN_NOT_INSERT_COINS);
@@ -192,8 +194,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void readBadge(int badgeCode) {
-		myDisplay.info(Messages.BADGE_READ);
-		myCashBox.setUseCard(true);
+		if(!myCashBox.isUseCoin()){
+			myDisplay.info(Messages.BADGE_READ);
+			myCashBox.setUseCard(true);
+		}
+		else{
+			myDisplay.warn(Messages.CAN_NOT_READ_BADGE);
+		}
+	
 			
 	}
 

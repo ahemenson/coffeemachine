@@ -17,6 +17,7 @@ public class MyCashBox {
 	private int centavos, dolares;
 	private int COFFEEPRICE;
 	private boolean isUseCard = false;
+	private boolean isUseCoin = false;
 	
 	
 	public MyCashBox(ComponentsFactory factory){
@@ -100,6 +101,16 @@ public class MyCashBox {
 
 	public void setUseCard(boolean isUseCard) {
 		this.isUseCard = isUseCard;
+	}
+
+
+	public boolean isUseCoin() {
+		return isUseCoin;
+	}
+
+
+	public void setUseCoin(boolean isUseCoin) {
+		this.isUseCoin = isUseCoin;
 	}
 		
 
