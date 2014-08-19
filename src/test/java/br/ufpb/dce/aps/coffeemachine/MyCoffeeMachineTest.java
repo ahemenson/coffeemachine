@@ -7,7 +7,7 @@ public class MyCoffeeMachineTest extends CoffeeMachineTest {
 	@Override
 	protected CoffeeMachine createFacade(ComponentsFactory factory) {
 		// TODO Auto-generated method stub
-		return new MyCoffeeMachine(factory);
+		return new MyCoffeeMachine();
 	}
 
 }

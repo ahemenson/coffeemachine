@@ -18,6 +18,7 @@ public class MyCashBox {
 	private int COFFEEPRICE;
 	private boolean isUseCard = false;
 	
+	
 	public MyCashBox(ComponentsFactory factory){
 		cashBox =  factory.getCashBox();
 		myDisplay = factory.getDisplay();
@@ -27,8 +28,7 @@ public class MyCashBox {
 	
 	public void insertCoin(Coin coin) {
 		
-		if(!isUseCard()){
-			if (coin != null) {
+		if (coin != null) {
 				moedas.add(coin);
 				centavos += coin.getValue() % 100;
 				dolares += coin.getValue() / 100;
@@ -37,13 +37,7 @@ public class MyCashBox {
 			} else {
 				throw new CoffeeMachineException("");
 			}
-		}
-		else{
-			returnCoins();
-			myDisplay.warn(Messages.CAN_NOT_INSERT_COINS);
-		}
-		
-		
+			
 	}
 
 	public boolean cancel(){
