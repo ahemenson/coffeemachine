@@ -1,11 +1,11 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import static org.mockito.Mockito.verify;
+import br.ufpb.dce.aps.coffeemachine.Button;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.Coin;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
-import br.ufpb.dce.aps.coffeemachine.Drink;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 
 /**
@@ -82,13 +82,17 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	private void newSession() {
+		
+		//verify(buttonDisplay).show("Black: $0.35", "White: $0.35",
+						//"Black with sugar: $0.35", "White with sugar: $0.35",
+							//"Bouillon: $0.25", null, null);
 		myCashBox.clearCoins();
 		myDisplay.info(Messages.INSERT_COINS);
 	}
 
-	public void select(Drink drink) {
+	public void select(Button drink) {
 		
-		if(drink == drink.BOUILLON){
+		if(drink == drink.BUTTON_5){
 			myCashBox.setCoffeePrice(25);
 		}
 
@@ -106,23 +110,23 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		switch (drink) {
 
-		case BLACK:			
+		case BUTTON_1:			
 			isvalido = coffee.blackPlan();
 			
 			break;
-		case WHITE:
+		case BUTTON_2:
 			coffee = new WhiteCoffee(factory);
 			isvalido = ((WhiteCoffee) coffee).whitePlan();
-			break;
-		case WHITE_SUGAR:
+			break;		
+		case BUTTON_3:
+			coffee = new BlackSugarCoffee(factory);
+			isvalido = ((BlackSugarCoffee) coffee).blackSugarPlan();
+			break;			
+		case BUTTON_4:
 			coffee = new WhiteSugarCoffee(factory);
 			isvalido = ((WhiteSugarCoffee) coffee).whiteSugarPlan();
 			break;
-		case BLACK_SUGAR:
-			coffee = new BlackSugarCoffee(factory);
-			isvalido = ((BlackSugarCoffee) coffee).blackSugarPlan();
-			break;
-		case BOUILLON:
+		case BUTTON_5:
 			coffee = new  Bouillon(factory);
 			//myCashBox.setCoffeePrice(25);
 			isvalido = ((Bouillon) coffee).bouillonPlan();
@@ -161,22 +165,23 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		switch (drink) {
 
-		case BLACK:
+		case BUTTON_1:
 			coffee.blackMix();
 			break;
 
-		case WHITE:
+		case BUTTON_2:
 			((WhiteCoffee) coffee).whiteMix();
 			break;
 
-		case WHITE_SUGAR:
-			((WhiteSugarCoffee) coffee).whiteSugarMix();
-			break;
-
-		case BLACK_SUGAR:
+		case BUTTON_3:
 			((BlackSugarCoffee) coffee).blackSugarMix();
 			break;
-		case BOUILLON:
+			
+		case BUTTON_4:
+			((WhiteSugarCoffee) coffee).whiteSugarMix();
+			break;
+			
+		case BUTTON_5:
 			((Bouillon) coffee).bouillonMix();
 			break;
 		}
@@ -212,6 +217,8 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		coffee = new BlackCoffee(factory);
 		myCashBox.setCoffeePrice(35);
 		myPayrollSystem = new MyPayrollSystem(factory);
+		factory.getButtonDisplay().show("Black: $0.35", "White: $0.35", "Black with sugar: $0.35", "White with sugar: $0.35", "Bouillon: $0.25", null, null);	
+		
 
 	}
 
@@ -228,5 +235,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	
 			
 	}
+
+	
 
 }
