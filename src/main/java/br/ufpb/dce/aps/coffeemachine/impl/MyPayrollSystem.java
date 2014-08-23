@@ -23,8 +23,8 @@ public class MyPayrollSystem {
 			
 	}
 	
-	public void debitar(int cents, int badgeCode){
-		payrollSystem.debit(cents, badgeCode);
+	public boolean debitar(int cents, int badgeCode){
+		return payrollSystem.debit(cents, badgeCode);
 	}
 
 }

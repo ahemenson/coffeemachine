@@ -137,7 +137,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		int[] changePlan = null;
 		
 		if(MyPayrollSystem.isUseBadge()){
-			myPayrollSystem.debitar(myCashBox.getCoffeePrice(), badgeCode);//inOrder.verify(payrollSystem).debit(drinkPrice, badgeCode)
+			if(!myPayrollSystem.debitar(myCashBox.getCoffeePrice(), badgeCode)){//inOrder.verify(payrollSystem).debit(drinkPrice, badgeCode)
+				myDisplay.warn(Messages.UNKNOWN_BADGE_CODE);//inOrder.verify(display).warn(Messages.UNKNOWN_BADGE_CODE);
+				newSession();
+				return;
+			}
 		}
 		
 		else{
