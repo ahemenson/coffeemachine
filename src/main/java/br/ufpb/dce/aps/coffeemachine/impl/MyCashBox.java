@@ -17,6 +17,9 @@ public class MyCashBox {
 	private int centavos, dolares;
 	private int COFFEEPRICE;
 	private boolean isUseCard = false;
+	
+
+
 	private boolean isUseCoin = false;
 	
 	
@@ -92,6 +95,10 @@ public class MyCashBox {
 	public void setCoffeePrice(int coffeePrice){
 		this.COFFEEPRICE = coffeePrice;
 	}
+	
+	public int getCoffeePrice(){
+		return this.COFFEEPRICE;
+	}
 
 
 	public boolean isUseCard() {
@@ -112,6 +119,7 @@ public class MyCashBox {
 	public void setUseCoin(boolean isUseCoin) {
 		this.isUseCoin = isUseCoin;
 	}
-		
+	
+	
 
 }

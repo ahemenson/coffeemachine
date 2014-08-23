@@ -21,6 +21,9 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private BlackCoffee coffee;
 	private MyDisplay myDisplay;
 	private MyCashBox myCashBox;
+	private MyPayrollSystem myPayrollSystem;
+
+	private int badgeCode;
 
 	public void insertCoin(Coin coin) {
 				
@@ -28,6 +31,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		if(!myCashBox.isUseCard()){
 			myCashBox.insertCoin(coin);
 			myCashBox.setUseCoin(true);
+			myPayrollSystem.setUseBadge(false);
 		}
 		else{
 			myDisplay.warn(Messages.CAN_NOT_INSERT_COINS);
@@ -89,11 +93,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		}
 
 		boolean isvalido = true;
-
-		if (myCashBox.calculaTroco() < 0) {
-			abortSession(Messages.NO_ENOUGHT_MONEY);// inOrder.verify(display).warn(Messages.NO_ENOUGHT_MONEY);
-			return;
+			
+		if(!MyPayrollSystem.isUseBadge()){
+			if (myCashBox.calculaTroco() < 0) {
+				abortSession(Messages.NO_ENOUGHT_MONEY);// inOrder.verify(display).warn(Messages.NO_ENOUGHT_MONEY);
+				return;
+			}
 		}
+		
 
 		// Chamada de métodos Plan (InOrder inOrder)
 
@@ -101,6 +108,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		case BLACK:			
 			isvalido = coffee.blackPlan();
+			
 			break;
 		case WHITE:
 			coffee = new WhiteCoffee(factory);
@@ -126,16 +134,23 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			abortSession(WarnMessage.getWarnMessage());
 			return;
 		}
-
 		int[] changePlan = null;
-
-		try {
-			changePlan = planCoins();
-		} catch (Exception e) {
-			abortSession(Messages.NO_ENOUGHT_CHANGE);
-			return;
+		
+		if(MyPayrollSystem.isUseBadge()){
+			myPayrollSystem.debitar(myCashBox.getCoffeePrice(), badgeCode);//inOrder.verify(payrollSystem).debit(drinkPrice, badgeCode)
 		}
 		
+		else{
+							
+			try {
+				changePlan = planCoins();
+			} catch (Exception e) {
+				abortSession(Messages.NO_ENOUGHT_CHANGE);
+				return;
+			}
+			
+		}
+							
 		myDisplay.info(Messages.MIXING);
 
 		// Chamada de métodos Mix (InOrder inOrder)
@@ -170,9 +185,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		coffee.drinkRelease();
 
 		myDisplay.info(Messages.TAKE_DRINK);
-
-		releaseCoins(changePlan); // entrega troco
-
+		
+		if(!MyPayrollSystem.isUseBadge()){
+			releaseCoins(changePlan); // entrega troco
+		}
+		
 		newSession(); // nova sessão
 
 	}
@@ -190,13 +207,16 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		myCashBox = new MyCashBox(factory);
 		coffee = new BlackCoffee(factory);
 		myCashBox.setCoffeePrice(35);
+		myPayrollSystem = new MyPayrollSystem(factory);
 
 	}
 
 	public void readBadge(int badgeCode) {
+		this.badgeCode = badgeCode;
 		if(!myCashBox.isUseCoin()){
 			myDisplay.info(Messages.BADGE_READ);
 			myCashBox.setUseCard(true);
+			myPayrollSystem.setUseBadge(true);
 		}
 		else{
 			myDisplay.warn(Messages.CAN_NOT_READ_BADGE);
