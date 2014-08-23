@@ -244,6 +244,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	public void setPrice(Button drink, int priceCents) {
 		myDrinkPrice.setPriceDrink(drink, priceCents);
 		myDrinkPrice.show();
+		myCashBox.setCoffeePrice(priceCents);
 				
 	}
 	
