@@ -22,8 +22,11 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	private MyDisplay myDisplay;
 	private MyCashBox myCashBox;
 	private MyPayrollSystem myPayrollSystem;
+	private DrinkPrice myDrinkPrice ;
 
 	private int badgeCode;
+
+	private int coffe;
 
 	public void insertCoin(Coin coin) {
 				
@@ -217,7 +220,9 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		coffee = new BlackCoffee(factory);
 		myCashBox.setCoffeePrice(35);
 		myPayrollSystem = new MyPayrollSystem(factory);
-		factory.getButtonDisplay().show("Black: $0.35", "White: $0.35", "Black with sugar: $0.35", "White with sugar: $0.35", "Bouillon: $0.25", null, null);	
+		myDrinkPrice = new DrinkPrice(factory);
+		factory.getButtonDisplay().show("Black: $0.35", "White: $0.35", "Black with sugar: $0.35", "White with sugar: $0.35", "Bouillon: $0.25", null, null);
+			
 		
 
 	}
@@ -235,6 +240,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	
 			
 	}
+
+	public void setPrice(Button drink, int priceCents) {
+		myDrinkPrice.setPriceDrink(drink, priceCents);
+		myDrinkPrice.show();
+				
+	}
+	
+	
 
 	
 
