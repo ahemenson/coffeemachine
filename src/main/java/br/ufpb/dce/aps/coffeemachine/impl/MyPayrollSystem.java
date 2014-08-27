@@ -1,30 +1,52 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Messages;
 import br.ufpb.dce.aps.coffeemachine.PayrollSystem;
 
-
 public class MyPayrollSystem {
-	
+
 	private PayrollSystem payrollSystem;
-	private static boolean isUseBadge;
-	
+	private int badgeCode;
+	private static boolean IS_USE_BADGE = false;
+
+	public MyPayrollSystem(ComponentsFactory factory) {
+		payrollSystem = factory.getPayrollSystem();
+		setUseBadge(false);
+	}
+
+	public void UtilizeBadge() throws UseCoinBeforeBadgeException {
+		if (MyCashBox.isUseCoin()) {
+			throw new UseCoinBeforeBadgeException("");
+		} else {
+			setUseBadge(true);
+		}
+
+	}
+
 	public static boolean isUseBadge() {
-		return isUseBadge;
+		return IS_USE_BADGE;
 	}
 
 	public static void setUseBadge(boolean isUseBadge) {
-		MyPayrollSystem.isUseBadge = isUseBadge;
+		IS_USE_BADGE = isUseBadge;
 	}
 
-	public MyPayrollSystem(ComponentsFactory factory){
-		payrollSystem =   factory.getPayrollSystem();
-		isUseBadge = false;
-			
+	public boolean debitar(int cents, int badgeCode) {
+		if (!payrollSystem.debit(cents, badgeCode)) {
+			MyDisplay.setWarnMessage((Messages.UNKNOWN_BADGE_CODE));
+			return false;
+		}
+		return true;
 	}
-	
-	public boolean debitar(int cents, int badgeCode){
-		return payrollSystem.debit(cents, badgeCode);
+
+	public void readBadgeCode(int badgeCode) {
+		this.badgeCode = badgeCode;
+
+	}
+
+	public int getBadgeCode() {
+		return badgeCode;
 	}
 
 }

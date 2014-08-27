@@ -2,6 +2,7 @@ package br.ufpb.dce.aps.coffeemachine.impl;
 
 import java.util.ArrayList;
 
+import br.ufpb.dce.aps.coffeemachine.Button;
 import br.ufpb.dce.aps.coffeemachine.CashBox;
 import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.Coin;
@@ -10,42 +11,42 @@ import br.ufpb.dce.aps.coffeemachine.Display;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 
 public class MyCashBox {
-	
+
 	private CashBox cashBox;
 	private Display myDisplay;
 	private ArrayList<Coin> moedas;
 	private int centavos, dolares;
 	private int COFFEEPRICE;
-	private boolean isUseCard = false;
-	
+	private static boolean IS_USE_COIN = false;
 
-
-	private boolean isUseCoin = false;
-	
-	
-	public MyCashBox(ComponentsFactory factory){
-		cashBox =  factory.getCashBox();
+	public MyCashBox(ComponentsFactory factory) {
+		cashBox = factory.getCashBox();
 		myDisplay = factory.getDisplay();
 		moedas = new ArrayList<Coin>();
-	}
-	
-	
-	public void insertCoin(Coin coin) {
-		
-		if (coin != null) {
-				moedas.add(coin);
-				centavos += coin.getValue() % 100;
-				dolares += coin.getValue() / 100;
-				myDisplay.info("Total: US$ " + dolares + "." + centavos + "");
-		
-			} else {
-				throw new CoffeeMachineException("");
-			}
-			
+		setCoffeePrice(35);
+		MyCashBox.setUseCoin(false);
 	}
 
-	public boolean cancel(){
-		
+	public void insertCoin(Coin coin) throws UseBagdeBeforeCoinException {
+
+		if (MyPayrollSystem.isUseBadge()) {
+			throw new UseBagdeBeforeCoinException("");
+
+		}
+		if (coin != null) {
+			moedas.add(coin);
+			centavos += coin.getValue() % 100;
+			dolares += coin.getValue() / 100;
+			myDisplay.info("Total: US$ " + dolares + "." + centavos + "");
+			IS_USE_COIN = true;
+
+		} else {
+			throw new CoffeeMachineException("");
+		}
+	}
+
+	public boolean cancel() {
+
 		if ((centavos == 0) && (dolares == 0)) {
 			throw new CoffeeMachineException("");
 		}
@@ -56,9 +57,42 @@ public class MyCashBox {
 		}
 		return false;
 	}
-	
+
+	public int[] planCoins() {
+
+		int troco = calculaTroco();
+		int[] changePlan = new int[6];
+		int i = 0;
+		for (Coin r : Coin.reverse()) {
+			if (r.getValue() <= troco && count(r) > 0) {
+				while (r.getValue() <= troco) {
+					troco -= r.getValue();
+					changePlan[i]++;
+				}
+			}
+			i++;
+		}
+		if (troco != 0) {
+			throw new CoffeeMachineException("");
+		}
+
+		return changePlan;
+	}
+
+	public void releaseCoins(int[] changePlan) {
+
+		for (int i = 0; i < changePlan.length; i++) {
+			int count = changePlan[i];
+			Coin coin = Coin.reverse()[i];
+
+			for (int j = 1; j <= count; j++) {
+				release(coin);
+			}
+		}
+	}
+
 	public void returnCoins() {
-	
+
 		for (Coin r : Coin.reverse()) {
 			for (Coin aux : moedas) {
 				if (aux == r) {
@@ -69,57 +103,42 @@ public class MyCashBox {
 	}
 
 	public int calculaTroco() {
-		
+
 		int somatorioMoedas = 0;
 
 		for (Coin aux : moedas) {
 			somatorioMoedas += aux.getValue();
 		}
 
-		return  somatorioMoedas - this.COFFEEPRICE;
-	}
-	
-	public void clearCoins(){
-		moedas.clear();
-	}
-	
-	public void release(Coin coin){
-		cashBox.release(coin);
+		return somatorioMoedas - this.COFFEEPRICE;
 	}
 
+	public void clearCoins() {
+		moedas.clear();
+	}
+
+	public void release(Coin coin) {
+		cashBox.release(coin);
+	}
 
 	public int count(Coin coin) {
 		return cashBox.count(coin);
 	}
-	
-	public void setCoffeePrice(int coffeePrice){
+
+	public void setCoffeePrice(int coffeePrice) {
 		this.COFFEEPRICE = coffeePrice;
 	}
-	
-	public int getCoffeePrice(){
+
+	public int getCoffeePrice() {
 		return this.COFFEEPRICE;
 	}
 
-
-	public boolean isUseCard() {
-		return isUseCard;
+	public static boolean isUseCoin() {
+		return IS_USE_COIN;
 	}
 
-
-	public void setUseCard(boolean isUseCard) {
-		this.isUseCard = isUseCard;
+	public static void setUseCoin(boolean isUseCoins) {
+		IS_USE_COIN = isUseCoins;
 	}
-
-
-	public boolean isUseCoin() {
-		return isUseCoin;
-	}
-
-
-	public void setUseCoin(boolean isUseCoin) {
-		this.isUseCoin = isUseCoin;
-	}
-	
-	
 
 }

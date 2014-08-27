@@ -1,49 +1,48 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
-import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 
-public class BlackCoffee {
-	
-	private ComponentsFactory factory;
-		
-	public BlackCoffee(ComponentsFactory factory){
-		this.factory = factory;
-		
+public class BlackCoffee implements IDrink {
+
+	private int cup;
+	private double water, coffeePonder;
+
+	public BlackCoffee() {
+		cup = 1;
+		water = 100;
+		coffeePonder = 15;
 	}
-		
-	public boolean blackPlan(){  
-						
-		if (!factory.getCupDispenser().contains(1)) { 
-			WarnMessage.setWarnMessage(Messages.OUT_OF_CUP);
+
+	public boolean Plan() {
+
+		if (!GerenteDrink.getFactory().getCupDispenser().contains(cup)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_CUP);
 			return false;
 		}
 
-		if (!factory.getWaterDispenser().contains(100)) { 
-			WarnMessage.setWarnMessage(Messages.OUT_OF_WATER);
+		if (!GerenteDrink.getFactory().getWaterDispenser()
+				.contains((int) water)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_WATER);
 			return false;
 		}
 
-		if (!factory.getCoffeePowderDispenser().contains(15)) {
-			WarnMessage.setWarnMessage(Messages.OUT_OF_COFFEE_POWDER); 
+		if (!GerenteDrink.getFactory().getCoffeePowderDispenser()
+				.contains((int) coffeePonder)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_COFFEE_POWDER);
 			return false;
 		}
-		
 		return true;
+
 	}
-	
-	public void blackMix(){
-		factory.getCoffeePowderDispenser().release(15); 
-		factory.getWaterDispenser().release(100);
+
+	public void Mix() {
+		GerenteDrink.getFactory().getCoffeePowderDispenser().release((int) coffeePonder);
+		GerenteDrink.getFactory().getWaterDispenser().release(100);
 	}
-	
-	public ComponentsFactory getFactory(){
-		return factory;
+
+	public void drinkRelease() {
+		GerenteDrink.getFactory().getCupDispenser().release(cup);
+		GerenteDrink.getFactory().getDrinkDispenser().release(100);
 	}
-	
-	public void drinkRelease(){
-		factory.getCupDispenser().release(1);
-		factory.getDrinkDispenser().release(100); 
-	}
-	
+
 }

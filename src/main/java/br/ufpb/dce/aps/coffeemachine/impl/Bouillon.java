@@ -1,47 +1,46 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
-import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
 import br.ufpb.dce.aps.coffeemachine.Messages;
 
-public class Bouillon extends BlackCoffee{
-	
-	public Bouillon(ComponentsFactory factory){
-		super(factory);
+public class Bouillon implements IDrink {
+
+	private int cup;
+	private double water, bouilon;
+
+	public Bouillon() {
+		cup = 1;
+		water = 100;
+		bouilon = 10;
 	}
-	
-	public boolean bouillonPlan(){
-		if (!blackPlan()) { //verifyBlackPlan(getCupDispenser(), getWaterDispenser(), getCoffeePowderDispenser()
-			return false;
-		}		
-		if (!getFactory().getBouillonDispenser().contains(10)) { 
-			WarnMessage.setWarnMessage(Messages.OUT_OF_BOUILLON_POWDER);
-			return false;
-		}
-		return true;
-	}	
-	
-	public void bouillonMix(){
-		getFactory().getBouillonDispenser().release(10);
-		blackMix(); 
-	}
-	
-	public boolean blackPlan(){  
-		
-		if (!getFactory().getCupDispenser().contains(1)) { 
-			WarnMessage.setWarnMessage(Messages.OUT_OF_CUP);
+
+	public boolean Plan() {
+		if (!GerenteDrink.getFactory().getCupDispenser().contains(cup)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_CUP);
 			return false;
 		}
 
-		if (!getFactory().getWaterDispenser().contains(100)) { 
-			WarnMessage.setWarnMessage(Messages.OUT_OF_WATER);
+		if (!GerenteDrink.getFactory().getWaterDispenser()
+				.contains((int) water)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_WATER);
 			return false;
 		}
-		
+		if (!GerenteDrink.getFactory().getBouillonDispenser().contains((int) bouilon)) {
+			MyDisplay.setWarnMessage(Messages.OUT_OF_BOUILLON_POWDER);
+			return false;
+		}
 		return true;
 	}
-	
-	public void blackMix(){
-		getFactory().getWaterDispenser().release(100);
+
+	public void Mix() {
+		GerenteDrink.getFactory().getBouillonDispenser().release((int) bouilon);
+		GerenteDrink.getFactory().getWaterDispenser().release((int) water);
+
+	}
+
+	public void drinkRelease() {
+		GerenteDrink.getFactory().getCupDispenser().release(cup);
+		GerenteDrink.getFactory().getDrinkDispenser().release(100);
+
 	}
 
 }
