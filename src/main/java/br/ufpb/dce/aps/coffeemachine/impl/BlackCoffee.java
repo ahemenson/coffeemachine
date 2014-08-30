@@ -52,7 +52,8 @@ public class BlackCoffee implements IDrink {
 	}
 
 	public void configureDrink(Recipe recipe) {
-		// TODO Auto-generated method stub
+		itens.put(Recipe.WATER, recipe.getIngredientQuantity(Recipe.WATER));
+		
 		
 	}
 
