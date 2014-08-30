@@ -5,6 +5,7 @@ import br.ufpb.dce.aps.coffeemachine.CoffeeMachine;
 import br.ufpb.dce.aps.coffeemachine.Coin;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
 import br.ufpb.dce.aps.coffeemachine.Messages;
+import br.ufpb.dce.aps.coffeemachine.Recipe;
 
 public class MyCoffeeMachine implements CoffeeMachine {
 
@@ -50,22 +51,24 @@ public class MyCoffeeMachine implements CoffeeMachine {
 		switch (drink) {
 
 		case BUTTON_1:
-			gerenteDrink.PlanDrink(new BlackCoffee());
+			gerenteDrink.selectDrink(new BlackCoffee());
 			break;
 		case BUTTON_2:
-			gerenteDrink.PlanDrink(new WhiteCoffee());
+			gerenteDrink.selectDrink(new WhiteCoffee());
 			break;
 		case BUTTON_3:
-			gerenteDrink.PlanDrink(new BlackSugarCoffee());
+			gerenteDrink.selectDrink(new BlackSugarCoffee());
 			break;
 		case BUTTON_4:
-			gerenteDrink.PlanDrink(new WhiteSugarCoffee());
+			gerenteDrink.selectDrink(new WhiteSugarCoffee());
 			break;
 		case BUTTON_5:
-			gerenteDrink.PlanDrink(new Bouillon());
+			gerenteDrink.selectDrink(new Bouillon());
 			break;
 
 		}
+		
+		gerenteDrink.planDrink();
 
 		if (!gerenteDrink.getResultValidateDrink()) {
 			abortSession(MyDisplay.getWarnMessage());
@@ -93,7 +96,7 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 		myDisplay.info(Messages.MIXING);
 
-		gerenteDrink.MixDrink();
+		gerenteDrink.mixDrink();
 
 		myDisplay.info(Messages.RELEASING);
 
@@ -146,6 +149,14 @@ public class MyCoffeeMachine implements CoffeeMachine {
 
 	private void showInfoButtons() {
 		myDisplay.showInfoButtons();
+	}
+
+	public void configuteDrink(Button button, Recipe recipe) {
+		myDrinkPrice.setPriceDrink(button, recipe);
+		gerenteDrink.setconfigureDrinkRecipe(button,recipe);
+		showInfoButtons();
+		
+		
 	}
 
 }

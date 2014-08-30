@@ -1,6 +1,7 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import br.ufpb.dce.aps.coffeemachine.Messages;
+import br.ufpb.dce.aps.coffeemachine.Recipe;
 
 public class BlackSugarCoffee implements IDrink {
 
@@ -22,18 +23,17 @@ public class BlackSugarCoffee implements IDrink {
 		}
 
 		if (!GerenteDrink.getFactory().getWaterDispenser()
-				.contains((int) water)) {
+				.contains(water)) {
 			MyDisplay.setWarnMessage(Messages.OUT_OF_WATER);
 			return false;
 		}
 
-		if (!GerenteDrink.getFactory().getCoffeePowderDispenser()
-				.contains((int) coffeePonder)) {
+		if (!GerenteDrink.getFactory().getCoffeePowderDispenser().contains(coffeePonder) ){
 			MyDisplay.setWarnMessage(Messages.OUT_OF_COFFEE_POWDER);
 			return false;
 		}
 		if (!GerenteDrink.getFactory().getSugarDispenser()
-				.contains((int) sugar)) {
+				.contains(sugar)) {
 			MyDisplay.setWarnMessage(Messages.OUT_OF_SUGAR);
 			return false;
 		}
@@ -42,9 +42,9 @@ public class BlackSugarCoffee implements IDrink {
 	}
 
 	public void Mix() {
-		GerenteDrink.getFactory().getCoffeePowderDispenser().release((int) coffeePonder);
-		GerenteDrink.getFactory().getWaterDispenser().release((int) water);
-		GerenteDrink.getFactory().getSugarDispenser().release((int) sugar);
+		GerenteDrink.getFactory().getCoffeePowderDispenser().release(coffeePonder);
+		GerenteDrink.getFactory().getWaterDispenser().release( water);
+		GerenteDrink.getFactory().getSugarDispenser().release(sugar);
 
 	}
 
@@ -52,6 +52,11 @@ public class BlackSugarCoffee implements IDrink {
 		GerenteDrink.getFactory().getCupDispenser().release(cup);
 		GerenteDrink.getFactory().getDrinkDispenser().release(100);
 
+	}
+
+	public void configureDrink(Recipe recipe) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

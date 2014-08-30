@@ -1,6 +1,7 @@
 package br.ufpb.dce.aps.coffeemachine.impl;
 
 import br.ufpb.dce.aps.coffeemachine.Messages;
+import br.ufpb.dce.aps.coffeemachine.Recipe;
 
 public class Bouillon implements IDrink {
 
@@ -20,11 +21,11 @@ public class Bouillon implements IDrink {
 		}
 
 		if (!GerenteDrink.getFactory().getWaterDispenser()
-				.contains((int) water)) {
+				.contains(water)) {
 			MyDisplay.setWarnMessage(Messages.OUT_OF_WATER);
 			return false;
 		}
-		if (!GerenteDrink.getFactory().getBouillonDispenser().contains((int) bouilon)) {
+		if (!GerenteDrink.getFactory().getBouillonDispenser().contains(bouilon)) {
 			MyDisplay.setWarnMessage(Messages.OUT_OF_BOUILLON_POWDER);
 			return false;
 		}
@@ -32,8 +33,8 @@ public class Bouillon implements IDrink {
 	}
 
 	public void Mix() {
-		GerenteDrink.getFactory().getBouillonDispenser().release((int) bouilon);
-		GerenteDrink.getFactory().getWaterDispenser().release((int) water);
+		GerenteDrink.getFactory().getBouillonDispenser().release( bouilon);
+		GerenteDrink.getFactory().getWaterDispenser().release(water);
 
 	}
 
@@ -41,6 +42,11 @@ public class Bouillon implements IDrink {
 		GerenteDrink.getFactory().getCupDispenser().release(cup);
 		GerenteDrink.getFactory().getDrinkDispenser().release(100);
 
+	}
+
+	public void configureDrink(Recipe recipe) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

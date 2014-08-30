@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import br.ufpb.dce.aps.coffeemachine.Button;
 import br.ufpb.dce.aps.coffeemachine.ButtonDisplay;
+import br.ufpb.dce.aps.coffeemachine.CoffeeMachineException;
 import br.ufpb.dce.aps.coffeemachine.ComponentsFactory;
+import br.ufpb.dce.aps.coffeemachine.Recipe;
 
 public class DrinkPrice {
 
@@ -14,6 +16,21 @@ public class DrinkPrice {
 
 	DrinkPrice(ComponentsFactory factory) {
 		buttonDisplay = factory.getButtonDisplay();
+	}
+	
+	public void setPriceDrink(Button button, Recipe recipe) {
+		
+		if(recipe != null){
+			
+				drinkPrice.put(button, recipe.getPriceCents());
+		}
+		else{
+				throw new CoffeeMachineException("");
+			}
+			
+				
+		
+
 	}
 
 	public void setPriceDrink(Button drink, int priceCents) {
@@ -42,5 +59,7 @@ public class DrinkPrice {
 	public void setButtonDisplay(ButtonDisplay buttonDisplay) {
 		this.buttonDisplay = buttonDisplay;
 	}
+	
+	
 
 }
