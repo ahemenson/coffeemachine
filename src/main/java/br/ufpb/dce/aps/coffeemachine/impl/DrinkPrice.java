@@ -11,6 +11,7 @@ import br.ufpb.dce.aps.coffeemachine.Recipe;
 public class DrinkPrice {
 
 	public static HashMap<Button, Integer> drinkPrice = new HashMap<Button, Integer>();
+	
 
 	private ButtonDisplay buttonDisplay;
 
@@ -23,6 +24,7 @@ public class DrinkPrice {
 		if(recipe != null){
 			
 				drinkPrice.put(button, recipe.getPriceCents());
+				
 		}
 		else{
 				throw new CoffeeMachineException("");

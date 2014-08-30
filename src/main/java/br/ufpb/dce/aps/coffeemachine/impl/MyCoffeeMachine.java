@@ -38,7 +38,8 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	}
 
 	public void select(Button drink) {
-
+		
+		
 		myCashBox.setCoffeePrice(myDrinkPrice.getPriceDrink(drink));
 
 		if (!MyPayrollSystem.isUseBadge()) {
@@ -64,6 +65,9 @@ public class MyCoffeeMachine implements CoffeeMachine {
 			break;
 		case BUTTON_5:
 			gerenteDrink.selectDrink(new Bouillon());
+			break;
+		case BUTTON_6:
+			gerenteDrink.selectDrink(new SweetCream());
 			break;
 
 		}
@@ -154,7 +158,9 @@ public class MyCoffeeMachine implements CoffeeMachine {
 	public void configuteDrink(Button button, Recipe recipe) {
 		myDrinkPrice.setPriceDrink(button, recipe);
 		gerenteDrink.setconfigureDrinkRecipe(button,recipe);
+		myDisplay.setRecipe(button, recipe);
 		showInfoButtons();
+		//myDisplay.showInfoButton2s(button,recipe);
 		
 		
 	}

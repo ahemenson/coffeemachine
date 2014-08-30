@@ -41,7 +41,6 @@ public class GerenteDrink {
 	}
 
 	public void validateDrink(boolean planDrinkResult) {
-		this.isValid = true;
 		this.isValid = planDrinkResult;
 	}
 
