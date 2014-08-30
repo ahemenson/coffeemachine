@@ -50,7 +50,7 @@ public class WhiteCoffee implements IDrink {
 
 	public void drinkRelease() {
 		GerenteDrink.getFactory().getCupDispenser().release(cup);
-		GerenteDrink.getFactory().getDrinkDispenser().release(100);
+		GerenteDrink.getFactory().getDrinkDispenser().release();
 
 	}
 

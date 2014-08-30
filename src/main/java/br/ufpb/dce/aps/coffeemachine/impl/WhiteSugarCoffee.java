@@ -53,7 +53,7 @@ public class WhiteSugarCoffee implements IDrink {
 
 	public void drinkRelease() {
 		GerenteDrink.getFactory().getCupDispenser().release(1);
-		GerenteDrink.getFactory().getDrinkDispenser().release(100);
+		GerenteDrink.getFactory().getDrinkDispenser().release();
 
 	}
 
